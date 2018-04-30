@@ -38,13 +38,14 @@ func Post(url string, body interface{}) ([]byte, error) {
 }
 
 func Put(url string, body interface{}) ([]byte, error) {
+	client := &http.Client{}
 	bytesBuffer := new(bytes.Buffer)
 	json.NewEncoder(bytesBuffer).Encode(body)
 	request, err := http.NewRequest(http.MethodPut, url, bytesBuffer)
 	request.Header = map[string][]string{
 		"Content-Type": {"application/json"},
 	}
-	response, err := http.Client{}.Do(request)
+	response, err := client.Do(request)
 	if err != nil {
 		return nil, err
 	}
